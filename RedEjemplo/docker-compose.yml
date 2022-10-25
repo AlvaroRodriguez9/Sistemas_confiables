@@ -1,0 +1,70 @@
+version: "2.2"
+services:
+  fw:
+    image: bin/fw
+    build: ./fw
+    container_name: fw
+    networks:
+      external-network:
+        ipv4_address: 10.5.0.1 
+      DMZ:
+        ipv4_address: 10.5.1.1
+      internal-network:
+        ipv4_address: 10.5.2.1
+    privileged: true
+    tty: true
+
+  external:
+    image: bin/external
+    build: ./external
+    networks:
+      - external-network 
+    depends_on: 
+      - fw
+    scale: 3 
+    privileged: true
+    tty: true
+
+  dmz:
+    image: bin/dmz
+    build: ./dmz
+    networks:
+      - DMZ
+    depends_on:
+      - fw
+    scale: 3
+    privileged: true
+    tty: true
+
+  internal:
+    image: bin/internal
+    build: ./internal
+    networks:
+      - internal-network
+    depends_on:
+      - fw
+    scale: 3
+    privileged: true
+    tty: true
+
+networks:
+  external-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.0.0/24 
+          gateway: 10.5.0.254 
+
+  DMZ:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.1.0/24
+          gateway: 10.5.1.254
+  
+  internal-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.5.2.0/24
+          gateway: 10.5.2.254
