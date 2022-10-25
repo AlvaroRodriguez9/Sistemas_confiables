@@ -1,0 +1,70 @@
+version: "2.2"
+services:
+  fw:
+    image: dmz/fw
+    build: ./fw
+    container_name: fw
+    networks:
+      extranet:
+        ipv4_address: 10.5.0.1
+      DMZ:
+        ipv4_address: 10.5.1.1
+      intranet:
+        ipv4_address: 10.5.2.1
+    privileged: true
+    tty: true
+    
+  ext:
+    image: dmz/ext
+    build: ./extranet
+    networks:
+      - extranet
+    depends_on:
+      - fw
+    scale: 3
+    privileged: true
+    tty: true
+  
+  dmz:
+    image: dmz/dmz
+    build: ./dmz
+    container_name: dmz1
+    networks:
+      - DMZ
+    depends_on:
+      - fw
+    privileged: true
+    tty: true
+  
+  int:
+    image: dmz/int
+    build: ./intranet
+    networks:
+      - intranet
+    depends_on:
+      - fw
+    scale: 3
+    privileged: true
+    tty: true
+  
+networks: 
+  extranet: 
+    driver: bridge
+    ipam:
+     config:
+      - subnet: 10.5.0.0/24
+        gateway: 10.5.0.254
+
+  DMZ:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 10.5.1.0/24
+        gateway: 10.5.1.254
+
+  intranet:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 10.5.2.0/24
+        gateway: 10.5.2.254
