@@ -14,7 +14,7 @@ services:
     privileged: true
     tty: true
     
-  ext:
+  ext1:
     image: dmz/ext
     build: ./extranet
     container_name: ext1
@@ -25,7 +25,7 @@ services:
     privileged: true
     tty: true
   
-  dmz:
+  dmz1:
     image: dmz/dmz
     build: ./dmz
     container_name: dmz1
@@ -36,16 +36,27 @@ services:
     privileged: true
     tty: true
   
-  int:
-    image: dmz/int
-    build: ./intranet
+  int1:
+    image: dmz/int1
+    build: ./int1
+    container_name: int1
     networks:
       - intranet
     depends_on:
       - fw
-    scale: 2
     privileged: true
     tty: true
+
+  int2:
+    image: dmz/int2
+    build: ./int2
+    container_name: int2
+    networks:
+      - intranet
+    depends_on:
+      - fw
+    privileged: true
+    tty: true  
   
 networks: 
   extranet: 
