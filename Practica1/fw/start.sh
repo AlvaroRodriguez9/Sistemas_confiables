@@ -20,6 +20,17 @@ iptables -A FORWARD -i eth1 -o eth2 -d 10.5.2.0/24 -p icmp --icmp-type echo-repl
 iptables -A FORWARD -i eth2 -o eth1 -s 10.5.2.0/24 -p tcp -m tcp --dport 22 -j ACCEPT 
 iptables -A FORWARD -i eth1 -o eth2 -d 10.5.2.0/24 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
 
+iptables -A FORWARD -i eth2 -o eth1 -s 10.5.2.0/24 -p tcp -j ACCEPT
+iptables -A FORWARD -i eth2 -o eth1 -s 10.5.2.0/24 -p udp -j ACCEPT
+iptables -A FORWARD -i eth2 -o eth1 -s 10.5.2.0/24 -p icmp -j ACCEPT
+
+iptables -t nat -A POSTROUTING -o eth1 -s 10.5.2.0/24 -j SNAT --to 10.5.0.1
+
+
+iptables -A FORWARD -i eth2 -o eth1 -s 10.5.2.0/24 -p tcp -m tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -i eth1 -o eth2 -d 10.5.2.0/24 -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+
+
 
 
 iptables -P INPUT DROP
