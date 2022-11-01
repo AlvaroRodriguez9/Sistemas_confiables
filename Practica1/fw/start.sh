@@ -31,6 +31,13 @@ iptables -A FORWARD -i eth2 -o eth1 -s 10.5.2.0/24 -p tcp -m tcp --dport 80 -j A
 iptables -A FORWARD -i eth1 -o eth2 -d 10.5.2.0/24 -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
 
 
+iptables -A FORWARD -o eth0 -d 10.5.1.2 -p tcp -m tcp --dport 80 -j ACCEPT
+iptables -A FORWARD -i eth0 -s 10.5.1.2 -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+
+iptables -A FORWARD -i eth2 -o eth0 -s 10.5.2.3 -p tcp -m tcp --dport 22 -j ACCEPT 
+iptables -A FORWARD -i eth0 -o eth2 -d 10.5.2.3 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+
+
 
 
 iptables -P INPUT DROP

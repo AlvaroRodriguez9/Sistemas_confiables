@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 RUN apt-get update 
 
-RUN apt-get install -y openssh-server net-tools iputils-ping traceroute vim nano iproute2 iptables pkg-config tcpdump nmap
+RUN apt-get install -y openssh-server net-tools iputils-ping traceroute vim nano iproute2 iptables pkg-config tcpdump nmap apache2
     
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' |chpasswd
