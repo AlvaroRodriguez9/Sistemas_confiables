@@ -1,3 +1,5 @@
+# Archivo Dockerfile 
+# Autor: Álvaro Rodríguez Carpintero
 FROM ubuntu:22.04
 
 RUN apt-get update 

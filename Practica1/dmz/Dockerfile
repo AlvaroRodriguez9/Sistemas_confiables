@@ -1,3 +1,6 @@
+# Archivo Dockerfile 
+# Autor: Álvaro Rodríguez Carpintero
+
 FROM ubuntu:22.04
 
 RUN apt-get update 
@@ -19,7 +22,7 @@ EXPOSE 22
 COPY ./start.sh .
 
 
-# HTTPS Config (Optional)
+# HTTPS 
 COPY ./index.html /var/www/html/
 
 RUN chmod 644 /var/www/html/index.html
