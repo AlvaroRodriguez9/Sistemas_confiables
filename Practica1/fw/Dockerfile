@@ -1,4 +1,4 @@
-# Archivo Dockerfile 
+# Archivo Dockerfile. Estos comandos se ejecutan al hacer docker-compose up
 # Autor: Álvaro Rodríguez Carpintero
 FROM ubuntu:22.04
 

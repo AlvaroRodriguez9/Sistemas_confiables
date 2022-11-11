@@ -1,3 +1,5 @@
+# Archivo de configuración .yml que contiene las especificaciones de la red y de los contenedores.
+# Autor: Álvaro Rodríguez Carpintero
 version: "2.2"
 services:
   fw:
