@@ -2,8 +2,17 @@ FROM ubuntu:22.04
 
 RUN apt-get update 
 
+
+
+
 RUN apt-get install -y openssh-server net-tools iputils-ping traceroute vim nano iproute2 iptables pkg-config tcpdump nmap
-    
+
+
+
+
+#Comandos para Snort
+
+
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' |chpasswd
 RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -16,6 +25,12 @@ EXPOSE 22
 
 COPY ./start.sh .
 
+COPY ./parasnort.sh .
+
 RUN chmod +x start.sh
+RUN chmod +x parasnort.sh
+RUN ./parasnort.sh
+
+
 
 CMD ["./start.sh"]
