@@ -20,6 +20,13 @@ RUN apt install -y build-essential libpcap-dev libpcre3-dev libnet1-dev zlib1g-d
 RUN mkdir snort-source-files
 RUN cd snort-source-files; git clone https://github.com/snort3/libdaq.git; cd libdaq; ./bootstrap; ./configure; make; make install; cd ../; wget https://github.com/gperftools/gperftools/releases/download/gperftools-2.10/gperftools-2.10.tar.gz; tar xzf gperftools-2.10.tar.gz; cd gperftools-2.10/; ./configure; make; make install; cd ../; git clone https://github.com/snort3/snort3.git; cd snort3/; ./configure_cmake.sh --prefix=/usr/local --enable-tcmalloc; cd build; make; make install; ldconfig; ln -s /usr/local/bin/snort /usr/sbin/snort 
 
+COPY ./snort.lua /usr/local/etc/snort/snort.lua
+COPY ./snort.lua /snort-source-files/snort3/lua/snort.lua
+
+RUN mkdir /usr/local/etc/rules; cd /usr/local/etc/rules; wget https://www.snort.org/downloads/community/snort3-community-rules.tar.gz; tar xzf snort3-community-rules.tar.gz -C /usr/local/etc/rules/;
+
+RUN sed -i 's/# alert/alert/g' /usr/local/etc/rules/snort3-community-rules/snort3-community.rules
+RUN sed -i '/$AIM_SERVERS/d' /usr/local/etc/rules/snort3-community-rules/snort3-community.rules
 
 
 
