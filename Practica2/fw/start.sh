@@ -45,8 +45,12 @@ iptables -A FORWARD -i eth1 -o eth2 -d 10.5.2.0/24 -p tcp --sport 443 -m state -
 iptables -A FORWARD -o eth0 -d 10.5.1.20 -p tcp -m tcp --dport 443 -j ACCEPT
 iptables -A FORWARD -i eth0 -s 10.5.1.20 -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
 
+#Para cowrie 
+iptables -A FORWARD -i eth1 -o eth0 -p tcp -m tcp --dport 22 -j ACCEPT
+iptables -A FORWARD -p tcp --dport 22 -i eth1 -s 10.5.0.20 -o eth0 -d 10.5.1.20 -m state --state NEW,ESTABLISHED -j ACCEPT
+
 iptables -P INPUT DROP
-iptables -P FORWARD ACCEPT
+iptables -P FORWARD DROP
 
 iptables -P OUTPUT ACCEPT
 
