@@ -1,5 +1,8 @@
 FROM ubuntu:22.04
 
+ENV TZ=Europe/Madrid
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN apt-get update 
 
 COPY ./paraHping.sh .
@@ -8,7 +11,7 @@ RUN chmod +x paraHping.sh
 RUN ./paraHping.sh
 
 RUN apt-get install -y openssh-server net-tools iputils-ping traceroute vim nano iproute2 iptables pkg-config tcpdump nmap 
-
+RUN apt-get install -y hping3
 
 
     
