@@ -46,7 +46,7 @@ iptables -A FORWARD -o eth0 -d 10.5.1.20 -p tcp -m tcp --dport 443 -j ACCEPT
 iptables -A FORWARD -i eth0 -s 10.5.1.20 -p tcp --sport 443 -m state --state ESTABLISHED -j ACCEPT
 
 iptables -P INPUT DROP
-iptables -P FORWARD DROP
+iptables -P FORWARD ACCEPT
 
 iptables -P OUTPUT ACCEPT
 

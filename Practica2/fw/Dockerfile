@@ -27,6 +27,7 @@ RUN mkdir /usr/local/etc/rules; cd /usr/local/etc/rules; wget https://www.snort.
 
 RUN sed -i 's/# alert/alert/g' /usr/local/etc/rules/snort3-community-rules/snort3-community.rules
 RUN sed -i '/$AIM_SERVERS/d' /usr/local/etc/rules/snort3-community-rules/snort3-community.rules
+RUN echo "alert tcp "\$\EXTERNAL_NET" any -> "\$\HOME_NET 80" (flags: S; msg:"Possible TCP DoS"; flow: stateless; detection_filter: track by_src, count 70, seconds 10;)" >> /usr/local/etc/rules/snort3-community-rules/snort3-community.rules
 
 
 
