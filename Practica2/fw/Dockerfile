@@ -1,3 +1,5 @@
+# Archivo Dockerfile. Estos comandos se ejecutan al hacer docker-compose up
+# Autor: Álvaro Rodríguez Carpintero
 FROM ubuntu:22.04
 
 RUN apt-get update 
@@ -27,7 +29,8 @@ RUN mkdir /usr/local/etc/rules; cd /usr/local/etc/rules; wget https://www.snort.
 
 RUN sed -i 's/# alert/alert/g' /usr/local/etc/rules/snort3-community-rules/snort3-community.rules
 RUN sed -i '/$AIM_SERVERS/d' /usr/local/etc/rules/snort3-community-rules/snort3-community.rules
-RUN echo "alert tcp any any -> "\$\HOME_NET 80" (flags: S; msg:\"Possible TCP DoS\"; flow: stateless; detection_filter: track by_dst, count 70, seconds 10; classtype:attempted-dos; sid:1000001; rev:1; )" >> /usr/local/etc/rules/snort3-community-rules/snort3-community.rules
+#Regla sacada de internet y ayudada para arreglar con Pablo Barrio
+RUN echo "alert tcp any any -> "\$\HOME_NET 80" (flags: S; msg:\"Possible TCP DoS\"; flow: stateless; detection_filter: track by_dst, count 70, seconds 10; classtype:attempted-dos; sid:1000001; rev:1; )" >> /usr/local/etc/rules/snort3-community-rules/snort3-community.rules 
 
 
 RUN mkdir /var/run/sshd

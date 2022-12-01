@@ -1,3 +1,6 @@
+# Archivo Dockerfile. Estos comandos se ejecutan al hacer docker-compose up
+# Autor: Álvaro Rodríguez Carpintero
+
 FROM ubuntu:22.04
 
 RUN apt-get update 
